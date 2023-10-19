@@ -55,7 +55,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 @bot.command()
 async def join_me(ctx):
     if not ctx.message.author.voice:
-        await ctx.send("{} not connected to a voice channel bub".format(ctx.message.author.name))
+        await ctx.send("You're not connected to a voice channel rn".format(ctx.message.author.name))
         return
     else:
         channel = ctx.message.author.voice.channel
@@ -68,7 +68,7 @@ async def leave_me(ctx):
     if voice_client.is_connected():
         await voice_client.disconnect()
     else:
-        await ctx.send("I am not connected to a voice channel bub")
+        await ctx.send("I am not connected to a voice channel rn")
 
 #commands for music
 
@@ -90,7 +90,75 @@ async def playsong(ctx,url):
             await ctx.send('**Now playing:** {}'.format(filename))
 
     except:
-        await ctx.send("I am not connected to a voice channel bub")
+        await ctx.send("I am not connected to a voice channel rn")
 
+
+@bot.command()
+async def pause(ctx):
+    voice_client = ctx.message.guild.voice_client
+    #sees if music/audio is playing
+    if voice_client.is_playing():
+        #pauses
+        await voice_client.pause()
+    else:
+        await ctx.send("I am not playing anything at the moment!!!!!")
+
+@bot.command()
+async def resume(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_paused():
+        await voice_client.resume()
+    else:
+        await ctx.send("I was not playing anything before this!!!! Use playsong command!!!!")
+
+@bot.command()
+async def pausesong(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.paused():
+       await voice_client.resume()
+
+    else:
+        await ctx.send("There is nothing to pause :(")
+
+
+@bot.event
+async def on_ready():
+    for guild in bot.guilds:
+        for channel in guild.text_channels :
+            if str(channel) == "santi-botting" :
+                await channel.send('Bot Activated..')
+                await channel.send(('https://tenor.com/view/kid-named-finger-wawa-gif-26530459'))
+        print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
+
+@bot.command()
+async def what_is_this(ctx):
+    owner=str(ctx.guild.owner)
+    region = str(ctx.guild.region)
+    guild_id = str(ctx.guild.id)
+    memberCount = str(ctx.guild.member_count)
+    icon = str(ctx.guild.icon_url)
+    desc=ctx.guild.description
+    
+    embed = discord.Embed(
+        title=ctx.guild.name + " Server Information",
+        description=desc,
+        color=discord.Color.blue()
+    )
+    embed.set_thumbnail(url=icon)
+    embed.add_field(name="Owner", value=owner, inline=True)
+    embed.add_field(name="Server ID", value=guild_id, inline=True)
+    embed.add_field(name="Region", value=region, inline=True)
+    embed.add_field(name="Member Count", value=memberCount, inline=True)
+
+    await ctx.send(embed=embed)
+
+    members=[]
+    async for member in ctx.guild.fetch_members(limit=150) :
+        await ctx.send('Name : {}\t Status : {}\n Joined at {}'.format(member.display_name,str(member.status),str(member.joined_at)))
+
+@bot.command()
+async def tell_me_about_yourself(ctx):
+    text = "I am the second bot after the first one broke\n I was birthed by santi."
+    await ctx.send(text)
 
 bot.run(TOKEN)
