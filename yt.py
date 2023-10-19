@@ -3,6 +3,8 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import yt_dlp
+from yt_dlp import YoutubeDL
+from discord import Embed, FFmpegPCMAudio
 import asyncio
 
 load_dotenv()
@@ -12,6 +14,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix = ".", intents = intents)
+
 yt_dlp.utils.bug_reports_message = lambda: ''
 #using youtube_dl source: "https://medium.com/pythonland/build-a-discord-bot-in-python-that-plays-music-and-send-gifs-856385e605a1"
 ytdl_format_options = {
@@ -72,7 +75,6 @@ async def leave_me(ctx):
 
 #commands for music
 
-#1 play()
 
 @bot.command()
 async def playsong(ctx,url):
@@ -81,7 +83,6 @@ async def playsong(ctx,url):
         #sees if bot is in the vc
         server = ctx.message.guild
         voice_channel = server.voice_client
-
         async with ctx.typing():
             #grabs file from downloaded url
             filename = await YTDLSource.from_url(url, loop=bot.loop)
@@ -89,8 +90,8 @@ async def playsong(ctx,url):
             voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
             await ctx.send('**Now playing:** {}'.format(filename))
 
-    except:
-        await ctx.send("I am not connected to a voice channel rn")
+    except Exception as e:
+        await ctx.send(e)
 
 
 @bot.command()
@@ -114,11 +115,12 @@ async def resume(ctx):
 @bot.command()
 async def pausesong(ctx):
     voice_client = ctx.message.guild.voice_client
-    if voice_client.paused():
-       await voice_client.resume()
+    if voice_client.is_playing():
+       await voice_client.stop()
 
     else:
         await ctx.send("There is nothing to pause :(")
+
 
 
 @bot.event
@@ -131,34 +133,8 @@ async def on_ready():
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
 
 @bot.command()
-async def what_is_this(ctx):
-    owner=str(ctx.guild.owner)
-    region = str(ctx.guild.region)
-    guild_id = str(ctx.guild.id)
-    memberCount = str(ctx.guild.member_count)
-    icon = str(ctx.guild.icon_url)
-    desc=ctx.guild.description
-    
-    embed = discord.Embed(
-        title=ctx.guild.name + " Server Information",
-        description=desc,
-        color=discord.Color.blue()
-    )
-    embed.set_thumbnail(url=icon)
-    embed.add_field(name="Owner", value=owner, inline=True)
-    embed.add_field(name="Server ID", value=guild_id, inline=True)
-    embed.add_field(name="Region", value=region, inline=True)
-    embed.add_field(name="Member Count", value=memberCount, inline=True)
-
-    await ctx.send(embed=embed)
-
-    members=[]
-    async for member in ctx.guild.fetch_members(limit=150) :
-        await ctx.send('Name : {}\t Status : {}\n Joined at {}'.format(member.display_name,str(member.status),str(member.joined_at)))
-
-@bot.command()
-async def tell_me_about_yourself(ctx):
-    text = "I am the second bot after the first one broke\n I was birthed by santi."
-    await ctx.send(text)
+async def who_r_u(ctx):
+    text = "I am the second bot after the first one broke\nI was birthed by santi."
+    await ctx.send(text) 
 
 bot.run(TOKEN)
