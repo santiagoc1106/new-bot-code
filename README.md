@@ -26,5 +26,5 @@ My bot can join/leave voice channels at the request of the user. It can also pla
 # Full explanation of how your code improves upon any skeleton code
 I used the code given to me to make my bot more like my bot, so it doesn't behave or have responses like a normal bot. 
 
-Any other info that will help your target audience understand your code
+# Any other info that will help your target audience understand your code
 Not applicable.
