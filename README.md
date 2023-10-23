@@ -9,8 +9,11 @@ I chose to make a bot that could play music, pause it, and resume. Being success
 # Full explanation of what your program does
 My bot can join/leave voice channels at the request of the user. It can also play, pause, and resume music. 
 - The playsong command works by having the bot recognize if it's in a voice channel. If not, then the bot sends the message: "I am not connected to a voice channel rn". If it is, then it will extract an audio file, then play it using ffmpeg.exe
+  
 -The pause command works by seeing if anything is playing at the moment. If not, then it sends the message: "I am not playing anything at the moment!!!!!". If there is something playing, then it pauses the music using await voice_client.pause(). 
+
 -The resume command makes the bot resume any music that has been paused. If nothing is paused, then it sends the message: "I was not playing anything before this!!!! Use playsong command!!!!". If there is something paused, then it will use the command await voice_client.resume().
+
 - The bot can also put a gif and say hello when it is activated, using the on_ready command. So whenever it is activated, the but checks what server it's in, then sends the message "Bot activated.." and a gif. The deets of the server are also posted on the terminal.
 
 # ID any “skeleton” sources that make up the bones of your code
