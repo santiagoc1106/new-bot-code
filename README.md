@@ -12,6 +12,7 @@ My bot can join/leave voice channels at the request of the user. It can also pla
 # ID any “skeleton” sources that make up the bones of your code
 https://medium.com/pythonland/build-a-discord-bot-in-python-that-plays-music-and-send-gifs-856385e605a1
 - This source helped me understand and build my bot line by line as I did not understand it at first. I broke down the code into sections and tried to explain as best as I can how the code worked
+
 https://www.youtube.com/watch?v=dRHUW_KnHLs
 -  This source helped me mainly on how to use ffmpeg.exe on my Python code.
 
