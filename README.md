@@ -7,7 +7,12 @@ The project prompt was to make a bot that could be accessed and interacted with 
 I chose to make a bot that could play music, pause it, and resume. Being successful really means just being able to make the bot play and pause music.
 
 # Full explanation of what your program does
-My bot can join/leave voice channels at the request of the user. It can also play, pause, and resume music. The bot can also put a gif  and say hello when it is activated. The deets of the server are also posted on the terminal.
+My bot can join/leave voice channels at the request of the user. It can also play, pause, and resume music. 
+- The playsong command works by having the bot recognize if it's in a voice channel. If not, then the bot sends the message, "I am not connected to a voice channel rn". If it is, then it will extract an audio file, then play it using ffmpeg.exe
+-The pause command works by seeing if anything is playing at the moment. If not, then it sends the message "
+-
+-
+- The bot can also put a gif  and say hello when it is activated. The deets of the server are also posted on the terminal.
 
 # ID any “skeleton” sources that make up the bones of your code
 - https://medium.com/pythonland/build-a-discord-bot-in-python-that-plays-music-and-send-gifs-856385e605a1
