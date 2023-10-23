@@ -90,8 +90,8 @@ async def playsong(ctx,url):
             voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
             await ctx.send('**Now playing:** {}'.format(filename))
 
-    except Exception as e:
-        await ctx.send(e)
+    except :
+        await ctx.send("I am not connected to a voice channel rn")
 
 
 @bot.command()
